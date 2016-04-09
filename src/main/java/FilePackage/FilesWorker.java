@@ -1,10 +1,9 @@
 package FilePackage;
 
+import MainPackage.Model;
 import org.apache.log4j.Logger;
 
-import MainPackage.Model;
-
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;

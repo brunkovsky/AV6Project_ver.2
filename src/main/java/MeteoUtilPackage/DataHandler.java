@@ -41,7 +41,7 @@ public class DataHandler {
     public static Integer getTime(XSSFRow row) {
         Integer time = getInteger(row, 0, 0);
         if (time != null && (time < 0 || time > MAX_TIME)) {
-            throw new IllegalArgumentException("Time value in column 'A' is not valid. Equals: " + time + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Time value in column 'A' is not valid. Equals: " + time);
         }
         return time;
     }
@@ -49,7 +49,7 @@ public class DataHandler {
     public static String getWindDirectionName(XSSFRow row) {
         Integer windDirectionDegrees = getInteger(row, 1, 0);
         if (windDirectionDegrees != null && (windDirectionDegrees < 0 || windDirectionDegrees > MAX_DEGREES)) {
-            throw new IllegalArgumentException("Wind Direction Degrees in column 'B' is not valid. Equals: " + windDirectionDegrees + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Wind Direction Degrees in column 'B' is not valid. Equals: " + windDirectionDegrees);
         }
         return DegreesWorker.getDirection(windDirectionDegrees);
     }
@@ -95,7 +95,7 @@ public class DataHandler {
     public static Integer getWindSpeed(XSSFRow row) {
         Integer windSpeed = getInteger(row, 2, 0);
         if (windSpeed != null && (windSpeed < 0 || windSpeed > MAX_WIND_SPEED)) {
-            throw new IllegalArgumentException("Wind speed in column 'C' is not valid. Equals: " + windSpeed + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Wind speed in column 'C' is not valid. Equals: " + windSpeed);
         }
         return windSpeed;
     }
@@ -103,7 +103,7 @@ public class DataHandler {
     public static Integer getWindRush(XSSFRow row) {
         Integer windRush = getInteger(row, 3, 0);
         if (windRush != null && (windRush < MIN_WIND_RUSH || windRush > MAX_WIND_RUSH)) {
-            throw new IllegalArgumentException("Wind rush in column 'D' is not valid. Equals: " + windRush + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Wind rush in column 'D' is not valid. Equals: " + windRush);
         }
         return windRush;
     }
@@ -120,7 +120,7 @@ public class DataHandler {
             visibility = value;
         }
         if (visibility != null && (visibility < 0 || visibility > MAX_WIND_VISIBILITY)) {
-            throw new IllegalArgumentException("Visibility in column 'E' is not valid. Equals: " + visibility + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Visibility in column 'E' is not valid. Equals: " + visibility);
         }
         return visibility;
     }
@@ -128,7 +128,7 @@ public class DataHandler {
     public static Integer getOctantsNumerator(XSSFRow row) {
         Integer octantsNumerator = getInteger(row, 8, 0);
         if (octantsNumerator != null && (octantsNumerator < 0 || octantsNumerator > MAX_OCTANTS)) {
-            throw new IllegalArgumentException("Octants Numerator in column 'I' is not valid. Equals: " + octantsNumerator + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Octants Numerator in column 'I' is not valid. Equals: " + octantsNumerator);
         }
         return octantsNumerator;
     }
@@ -136,7 +136,7 @@ public class DataHandler {
     public static Integer getOctantsDenominator(XSSFRow row) {
         Integer octantsDenominator = getInteger(row, 8, 1);
         if (octantsDenominator != null && (octantsDenominator < 0 || octantsDenominator > MAX_OCTANTS)) {
-            throw new IllegalArgumentException("Octants Denominator in column 'I' is not valid. Equals: " + octantsDenominator + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Octants Denominator in column 'I' is not valid. Equals: " + octantsDenominator);
         }
         return octantsDenominator;
     }
@@ -155,7 +155,7 @@ public class DataHandler {
             cloudiness = firstNumber;
         }
         if (cloudiness != null && (cloudiness < 0 || cloudiness > MAX_CLOUDINESS)) {
-            throw new IllegalArgumentException("Cloudiness in column 'K' is not valid. Equals: " + cloudiness + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Cloudiness in column 'K' is not valid. Equals: " + cloudiness);
         }
         return cloudiness;
     }
@@ -163,7 +163,7 @@ public class DataHandler {
     public static Double getTemperature(XSSFRow row) {
         Double temperature = getDouble(row, 11, 0);
         if (temperature != null && (temperature < MIN_TEMPERATURE || temperature > MAX_TEMPERATURE)) {
-            throw new IllegalArgumentException("Temperature in column 'L' is not valid. Equals: " + temperature + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Temperature in column 'L' is not valid. Equals: " + temperature);
         }
         return temperature;
     }
@@ -171,7 +171,7 @@ public class DataHandler {
     public static Double getDewPointTemperature(XSSFRow row) {
         Double DewPointTemperature = getDouble(row, 12, 0);
         if (DewPointTemperature != null && (DewPointTemperature < MIN_DEW_POINT_TEMPERATURE || DewPointTemperature > MAX_DEW_POINT_TEMPERATURE)) {
-            throw new IllegalArgumentException("Dew point temperature in column 'M' is not valid. Equals: " + DewPointTemperature + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Dew point temperature in column 'M' is not valid. Equals: " + DewPointTemperature);
         }
         return DewPointTemperature;
     }
@@ -179,7 +179,7 @@ public class DataHandler {
     public static Integer getRelativityHumidity(XSSFRow row) {
         Integer RelativityHumidity = getInteger(row, 13, 0);
         if (RelativityHumidity != null && (RelativityHumidity < 0 || RelativityHumidity > MAX_RELATIVITY_HUMIDITY)) {
-            throw new IllegalArgumentException("Relativity humidity in column 'N' is not valid. Equals: " + RelativityHumidity + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Relativity humidity in column 'N' is not valid. Equals: ");
         }
         return RelativityHumidity;
     }
@@ -187,7 +187,7 @@ public class DataHandler {
     public static Double getAbsoluteHumidity(XSSFRow row) {
         Double AbsoluteHumidity = getDouble(row, 14, 0);
         if (AbsoluteHumidity != null && (AbsoluteHumidity < 0 || AbsoluteHumidity > MAX_ABSOLUTE_HUMIDITY)) {
-            throw new IllegalArgumentException("Absolute humidity in column 'O' is not valid. Equals: " + AbsoluteHumidity + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Absolute humidity in column 'O' is not valid. Equals: " + AbsoluteHumidity);
         }
         return AbsoluteHumidity;
     }
@@ -195,7 +195,7 @@ public class DataHandler {
     public static Double getAtmospherePressure(XSSFRow row) {
         Double AtmospherePressure = getDouble(row, 15, 0);
         if (AtmospherePressure != null && (AtmospherePressure < MIN_ATMOSPHERE_PRESSURE || AtmospherePressure > MAX_ATMOSPHERE_PRESSURE)) {
-            throw new IllegalArgumentException("Atmosphere pressure in column 'P' is not valid. Equals: " + AtmospherePressure + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Atmosphere pressure in column 'P' is not valid. Equals: " + AtmospherePressure);
         }
         return AtmospherePressure;
     }
@@ -203,7 +203,7 @@ public class DataHandler {
     public static Double getBarometricTrend(XSSFRow row) {
         Double barometricTrend = getDouble(row, 16, 0);
         if (barometricTrend != null && (barometricTrend < MIN_BAROMETRIC_TREND || barometricTrend > MAX_BAROMETRIC_TREND)) {
-            throw new IllegalArgumentException("Barometric trend in column 'Q' is not valid. Equals: " + barometricTrend + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Barometric trend in column 'Q' is not valid. Equals: " + barometricTrend);
         }
         return barometricTrend;
     }
@@ -211,7 +211,7 @@ public class DataHandler {
     public static Double getQnhGpa(XSSFRow row) {
         Double QnhGpa = getDouble(row, 17, 0);
         if (QnhGpa != null && (QnhGpa < MIN_QNH_GPA || QnhGpa > MAX_QNH_GPA)) {
-            throw new IllegalArgumentException("QnhGpa in column 'R' is not valid. Equals: " + QnhGpa + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", QnhGpa in column 'R' is not valid. Equals: " + QnhGpa);
         }
         return QnhGpa;
     }
@@ -219,7 +219,7 @@ public class DataHandler {
     public static Double getQnhMm(XSSFRow row) {
         Double QnhMm = getDouble(row, 18, 0);
         if (QnhMm != null && (QnhMm < MIN_QNH_MM || QnhMm > MAX_QNH_MM)) {
-            throw new IllegalArgumentException("QnhMm in column 'S' is not valid. Equals: " + QnhMm + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", QnhMm in column 'S' is not valid. Equals: " + QnhMm);
         }
         return QnhMm;
     }
@@ -227,7 +227,7 @@ public class DataHandler {
     public static Double getQfe(XSSFRow row) {
         Double Qfe = getDouble(row, 19, 0);
         if (Qfe != null && (Qfe < MIN_QFE || Qfe > MAX_QFE)) {
-            throw new IllegalArgumentException("Qfe in column 'T' is not valid. Equals: " + Qfe + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Qfe in column 'T' is not valid. Equals: " + Qfe);
         }
         return Qfe;
     }

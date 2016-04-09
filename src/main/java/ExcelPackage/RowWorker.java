@@ -1,9 +1,8 @@
 package ExcelPackage;
 
-import org.apache.log4j.Logger;
-
 import MainPackage.Model;
 import MeteoUtilPackage.DataHandler;
+import org.apache.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 
 import java.util.Date;
