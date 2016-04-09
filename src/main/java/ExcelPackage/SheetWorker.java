@@ -27,11 +27,7 @@ public class SheetWorker {
         for (int i = FIRST_ROW_OF_DATA; i < LAST_ROW_OF_DATA; i++) {
             Model model;
             model = RowWorker.getModel(currentSheet.getRow(i));
-//            if (model.getTime() != null && model.getTime() + FIRST_ROW_OF_DATA == i) {
-                result.add(model);
-//            } else {
-//                throw new IllegalArgumentException("Invalid row in sheet = " + currentSheet.getSheetName() + ", #row = " + (i + 1) + ". Maybe not valid column 'A'");
-//            }
+            result.add(model);
         }
         return result;
     }

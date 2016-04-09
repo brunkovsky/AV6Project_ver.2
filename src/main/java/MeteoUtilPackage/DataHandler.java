@@ -103,7 +103,7 @@ public class DataHandler {
     public static Integer getWindRush(XSSFRow row) {
         Integer windRush = getInteger(row, 3, 0);
         if (windRush != null && (windRush < MIN_WIND_RUSH || windRush > MAX_WIND_RUSH)) {
-            throw new IllegalArgumentException("Wind speed in column 'D' is not valid. Equals: " + windRush + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
+            throw new IllegalArgumentException("Wind rush in column 'D' is not valid. Equals: " + windRush + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", FileName: " + FileWorker.getCurrentFile().getName());
         }
         return windRush;
     }
@@ -114,7 +114,7 @@ public class DataHandler {
         stringFromCell = stringFromCell.replaceAll("k", "к");
         stringFromCell = stringFromCell.replaceAll("m", "м");
         Integer value = getInteger(row, 4, 0);
-        if (stringFromCell.contains("км")) {
+        if (value != null && stringFromCell.contains("км")) {
             visibility = value * 1000;
         } else {
             visibility = value;

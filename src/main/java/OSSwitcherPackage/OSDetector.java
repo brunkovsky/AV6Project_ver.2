@@ -11,26 +11,26 @@ public class OSDetector {
     private final static String PASSWORD_BD;
 
     static {
-        String path;
+        String propertiesPath;
         String osType = System.getProperty("os.name");
         switch (osType) {
             case "Mac OS X":
-                path = "mac.properties";
+                propertiesPath = "mac.properties";
                 break;
             case "Windows":
-                path = "windows.properties";
+                propertiesPath = "windows.properties";
                 break;
             case "Windows 7":
-                path = "windows.properties";
+                propertiesPath = "windows.properties";
                 break;
             case "Linux":
-                path = "linux.properties";
+                propertiesPath = "linux.properties";
                 break;
             default:
                 throw new RuntimeException("Error while execute 'switch case' block. Unsupported OS detected: " + osType);
         }
         Properties properties = new Properties();
-        InputStream inputStream = OSDetector.class.getClassLoader().getResourceAsStream(path);
+        InputStream inputStream = OSDetector.class.getClassLoader().getResourceAsStream(propertiesPath);
         InputStreamReader inputStreamReader = null;
         try {
             inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
