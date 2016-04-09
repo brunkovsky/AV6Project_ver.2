@@ -13,7 +13,7 @@ public class Main {
         String pathToDataFolder = OSDetector.getPathToDataFolder();
         File[] files = FilesWorker.getFiles(pathToDataFolder);
         List<Model> models = FilesWorker.getModels(files);
-        if (AV6Errors.exists()) {
+        if (AV6Errors.length() > 0) {
             System.out.println("Errors found. Log in D:/AV6Errors.log");
         } else {
             for (Model model : models) {
