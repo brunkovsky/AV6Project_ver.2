@@ -10,26 +10,32 @@ import java.util.Date;
 public class RowWorker {
     private static final Logger log = Logger.getLogger(RowWorker.class.getName());
     private static XSSFRow currentRow;
-
-    public static Model getModel(XSSFRow row) {
-        catchNullArgument(row);
-        currentRow = row;
-        return getModelFromRow();
-    }
+    private static Date currentRowTime;
 
     public static XSSFRow getCurrentRow() {
         return currentRow;
     }
 
-    private static Model getModelFromRow() {
-        Integer time = null;
-        try {
-            time = DataHandler.getTime(currentRow);
-        } catch (IllegalArgumentException e) {
-            log.error(e.getMessage());
-        }
+    public static Date getCurrentRowTime() {
+        return currentRowTime;
+    }
 
-        Date date = DataHandler.getDate(currentRow);
+    public static Model getModel(XSSFRow row) {
+        catchNullArgument(row);
+        currentRow = row;
+        currentRowTime = calculateRowTime();
+        return getModelFromRow();
+    }
+
+    private static Date calculateRowTime() {
+        Date createSheetDate = SheetWorker.getCreateSheetDate();
+        long longDate = createSheetDate.getTime();
+        longDate = longDate - (currentRow.getRowNum() - 3) * 1000 * 60 * 60;
+        return new Date(longDate);
+    }
+
+    private static Model getModelFromRow() {
+        Date date = getCurrentRowTime();
 
         String windDirectionName = null;
         try {
@@ -150,7 +156,7 @@ public class RowWorker {
             log.error(e.getMessage());
         }
 
-        return new Model(time, date, windDirectionName, windSpeed, windRush, visibility, octantsNumerator, octantsDenominator, cloudForm, cloudiness, temperature, dewPointTemperature, relativityHumidity, absoluteHumidity, atmospherePressure, barometricTrend, qnhGpa, qnhMm, qfe);
+        return new Model(date, windDirectionName, windSpeed, windRush, visibility, octantsNumerator, octantsDenominator, cloudForm, cloudiness, temperature, dewPointTemperature, relativityHumidity, absoluteHumidity, atmospherePressure, barometricTrend, qnhGpa, qnhMm, qfe);
     }
 
     private static void catchNullArgument(XSSFRow row) {

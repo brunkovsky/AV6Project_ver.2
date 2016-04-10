@@ -1,5 +1,6 @@
 package MainPackage;
 
+import DBPackage.DBWorker;
 import FilePackage.FilesWorker;
 import OSSwitcherPackage.OSDetector;
 
@@ -8,23 +9,18 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        File AV6Errors = new File("D:/AV6Errors.log");
+        File AV6Errors = new File("/Volumes/Users/Stas/AV6Errors.log");
         AV6Errors.delete();
         String pathToDataFolder = OSDetector.getPathToDataFolder();
         File[] files = FilesWorker.getFiles(pathToDataFolder);
         List<Model> models = FilesWorker.getModels(files);
         List<ModelExtended> modelsExtended = FilesWorker.getModelsExtended(files);
         if (AV6Errors.length() > 0) {
-            System.out.println("Errors found. Log in D:/AV6Errors.log");
+            System.err.println("Errors found. Log in /Volumes/Users/Stas/AV6Errors.log");
         } else {
-            for (Model model :models) {
-                System.out.println(model);
-            }
-            System.out.println();
-            for (ModelExtended modelExtended :modelsExtended) {
-                System.out.println(modelExtended);
-            }
+            DBWorker dbWorker = new DBWorker(OSDetector.getUserNameBd(), OSDetector.getPasswordBd());
+            dbWorker.fillDB(models);
+            dbWorker.fillDBExtended(modelsExtended);
         }
-
     }
 }

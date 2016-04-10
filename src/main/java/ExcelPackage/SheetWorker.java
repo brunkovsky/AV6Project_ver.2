@@ -1,5 +1,6 @@
 package ExcelPackage;
 
+import FilePackage.FileWorker;
 import MainPackage.Model;
 import MainPackage.ModelExtended;
 import MeteoUtilPackage.DataHandler;
@@ -11,25 +12,70 @@ import java.util.Date;
 import java.util.List;
 
 public class SheetWorker {
+    private static Date createSheetDate;
     private static final Logger log = Logger.getLogger(SheetWorker.class.getName());
     private static XSSFSheet currentSheet;
     private static final int FIRST_ROW_OF_DATA = 3;
     private static final int LAST_ROW_OF_DATA = 27;
 
+    public static Date getCreateSheetDate() {
+        return createSheetDate;
+    }
+
+    public static XSSFSheet getCurrentSheet() {
+        return currentSheet;
+    }
+
     public static List<Model> getModels(XSSFSheet sheet) {
-        catchNullArgument(sheet);
-        currentSheet = sheet;
+        calculateInternalEntity(sheet);
         return getModelsFromSheet();
     }
 
     public static ModelExtended getModelExtended(XSSFSheet sheet) {
-        catchNullArgument(sheet);
-        currentSheet = sheet;
+        calculateInternalEntity(sheet);
         return getModelExtendedFromSheet();
     }
 
+    private static void calculateInternalEntity(XSSFSheet sheet) {
+        catchNullArgument(sheet);
+        currentSheet = sheet;
+        createSheetDate = calculateSheetDate();
+    }
+
+    private static Date calculateSheetDate() {
+        long dayOfWeekMs = 0;
+        String dayOfWeek = currentSheet.getSheetName();
+        Date date = FileWorker.getCreateFileDate();
+        switch (dayOfWeek) {
+            case "понедельник":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 7;
+                break;
+            case "вторник":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 6;
+                break;
+            case "среда":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 5;
+                break;
+            case "четверг":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 4;
+                break;
+            case "пятница":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 3;
+                break;
+            case "суббота":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 2;
+                break;
+            case "воскресенье":
+                dayOfWeekMs = 1000 * 60 * 60 * 24;
+                break;
+        }
+        long dateMs = date.getTime();
+        dateMs = dateMs - dayOfWeekMs;
+        return new Date(dateMs);
+    }
+
     private static ModelExtended getModelExtendedFromSheet() {
-        Date date = DataHandler.getDate(currentSheet);
+        Date date = calculateSheetDate();
 
         Double minTempAir = null;
         try {
@@ -95,10 +141,6 @@ public class SheetWorker {
         }
 
         return new ModelExtended(date, minTempAir, minTempSoil, maxTempAir, averageTempAir, min2cm, Precipitation00, Precipitation06, Precipitation12, Precipitation18);
-    }
-
-    public static XSSFSheet getCurrentSheet() {
-        return currentSheet;
     }
 
     private static List<Model> getModelsFromSheet() {

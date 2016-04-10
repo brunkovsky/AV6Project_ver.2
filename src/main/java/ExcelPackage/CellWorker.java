@@ -27,7 +27,7 @@ public class CellWorker {
     private static List<Double> getDoubles(String stringArg) {
         catchNullArgument(stringArg);
         if (stringArg.equals("")) {
-            return new ArrayList<Double>();
+            return new ArrayList<>();
         }
         return getDoublesFromString(stringArg);
     }

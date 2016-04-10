@@ -27,6 +27,46 @@ public class ModelExtended {
         this.precipitation18 = precipitation18;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public Double getMinTempAir() {
+        return minTempAir;
+    }
+
+    public Double getMinTempSoil() {
+        return minTempSoil;
+    }
+
+    public Double getMaxTempAir() {
+        return maxTempAir;
+    }
+
+    public Double getAverageTemp() {
+        return averageTemp;
+    }
+
+    public Double getMin2cm() {
+        return min2cm;
+    }
+
+    public Double getPrecipitation00() {
+        return precipitation00;
+    }
+
+    public Double getPrecipitation06() {
+        return precipitation06;
+    }
+
+    public Double getPrecipitation12() {
+        return precipitation12;
+    }
+
+    public Double getPrecipitation18() {
+        return precipitation18;
+    }
+
     @Override
     public String toString() {
         return "ModelExtended{" +

@@ -1,5 +1,7 @@
 package MeteoUtilPackage;
+
 // todo: lock cells in excel file. leave only these, who may be edited and comment fields
+
 import ExcelPackage.CellWorker;
 import ExcelPackage.RowWorker;
 import ExcelPackage.SheetWorker;
@@ -7,10 +9,6 @@ import FilePackage.FileWorker;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-
-import java.io.File;
-import java.util.Date;
-import java.util.List;
 
 public class DataHandler {
     private static final int MAX_TIME = 23;
@@ -37,7 +35,7 @@ public class DataHandler {
     private static final double MAX_QNH_MM = 800;
     private static final double MIN_QFE = 970;
     private static final double MAX_QFE = 1040;
-    private static final double MAX_PRECIPITATION = 10;
+    private static final double MAX_PRECIPITATION = 1000;
 
     // Model's methods
     public static Integer getTime(XSSFRow row) {
@@ -54,81 +52,6 @@ public class DataHandler {
             throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Wind Direction Degrees in column 'B' is not valid. Equals: " + windDirectionDegrees);
         }
         return DegreesWorker.getDirection(windDirectionDegrees);
-    }
-
-    public static Date getDate (XSSFRow row) {
-        File file = FileWorker.getCurrentFile();
-        XSSFSheet sheet = SheetWorker.getCurrentSheet();
-        int year = Integer.parseInt(file.getName().substring(0, 4));
-        int month = Integer.parseInt(file.getName().substring(4, 6));
-        int day = Integer.parseInt(file.getName().substring(6, 8));
-        int hour = row.getRowNum() - 3;
-        long dayOfWeekMs = 0;
-        String dayOfWeek = sheet.getSheetName();
-        switch (dayOfWeek) {
-            case "понедельник":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 7;
-                break;
-            case "вторник":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 6;
-                break;
-            case "среда":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 5;
-                break;
-            case "четверг":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 4;
-                break;
-            case "пятница":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 3;
-                break;
-            case "суббота":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 2;
-                break;
-            case "воскресенье":
-                dayOfWeekMs = 1000 * 60 * 60 * 24;
-                break;
-        }
-        Date date = new Date(year - 1900, month - 1, day, hour, 0);
-        long dateMs = date.getTime();
-        dateMs = dateMs - dayOfWeekMs;
-        return new Date(dateMs);
-    }
-
-    // todo getDate move to FileWorker class
-    public static Date getDate (XSSFSheet sheet) {
-        File file = FileWorker.getCurrentFile();
-        int year = Integer.parseInt(file.getName().substring(0, 4));
-        int month = Integer.parseInt(file.getName().substring(4, 6));
-        int day = Integer.parseInt(file.getName().substring(6, 8));
-        long dayOfWeekMs = 0;
-        String dayOfWeek = sheet.getSheetName();
-        switch (dayOfWeek) {
-            case "понедельник":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 7;
-                break;
-            case "вторник":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 6;
-                break;
-            case "среда":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 5;
-                break;
-            case "четверг":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 4;
-                break;
-            case "пятница":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 3;
-                break;
-            case "суббота":
-                dayOfWeekMs = 1000 * 60 * 60 * 24 * 2;
-                break;
-            case "воскресенье":
-                dayOfWeekMs = 1000 * 60 * 60 * 24;
-                break;
-        }
-        Date date = new Date(year - 1900, month - 1, day);
-        long dateMs = date.getTime();
-        dateMs = dateMs - dayOfWeekMs;
-        return new Date(dateMs);
     }
 
     public static Integer getWindSpeed(XSSFRow row) {
