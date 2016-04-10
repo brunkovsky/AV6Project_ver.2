@@ -1,5 +1,5 @@
 package MeteoUtilPackage;
-
+// todo: lock cells in excel file. leave only these, who may be edited and comment fields
 import ExcelPackage.CellWorker;
 import ExcelPackage.RowWorker;
 import ExcelPackage.SheetWorker;
@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 public class DataHandler {
     private static final int MAX_TIME = 23;
@@ -36,6 +37,7 @@ public class DataHandler {
     private static final double MAX_QNH_MM = 800;
     private static final double MIN_QFE = 970;
     private static final double MAX_QFE = 1040;
+    private static final double MAX_PRECIPITATION = 10;
 
     // Model's methods
     public static Integer getTime(XSSFRow row) {
@@ -87,6 +89,43 @@ public class DataHandler {
                 break;
         }
         Date date = new Date(year - 1900, month - 1, day, hour, 0);
+        long dateMs = date.getTime();
+        dateMs = dateMs - dayOfWeekMs;
+        return new Date(dateMs);
+    }
+
+    // todo getDate move to FileWorker class
+    public static Date getDate (XSSFSheet sheet) {
+        File file = FileWorker.getCurrentFile();
+        int year = Integer.parseInt(file.getName().substring(0, 4));
+        int month = Integer.parseInt(file.getName().substring(4, 6));
+        int day = Integer.parseInt(file.getName().substring(6, 8));
+        long dayOfWeekMs = 0;
+        String dayOfWeek = sheet.getSheetName();
+        switch (dayOfWeek) {
+            case "понедельник":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 7;
+                break;
+            case "вторник":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 6;
+                break;
+            case "среда":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 5;
+                break;
+            case "четверг":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 4;
+                break;
+            case "пятница":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 3;
+                break;
+            case "суббота":
+                dayOfWeekMs = 1000 * 60 * 60 * 24 * 2;
+                break;
+            case "воскресенье":
+                dayOfWeekMs = 1000 * 60 * 60 * 24;
+                break;
+        }
+        Date date = new Date(year - 1900, month - 1, day);
         long dateMs = date.getTime();
         dateMs = dateMs - dayOfWeekMs;
         return new Date(dateMs);
@@ -232,128 +271,102 @@ public class DataHandler {
         return Qfe;
     }
 
+    // ModelExtended's methods
+    public static Double getMinTempAir(XSSFSheet sheet) {
+        Double minTempAir = getDouble(sheet.getRow(27), 3, 0);
+        if (minTempAir != null && (minTempAir < MIN_TEMPERATURE || minTempAir > MAX_TEMPERATURE)) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", MinTempAir. Equals: " + minTempAir);
+        }
+        return minTempAir;
+    }
+
+    public static Double getMinTempSoil(XSSFSheet sheet) {
+        Double minTempSoil = getDouble(sheet.getRow(28), 3, 0);
+        if (minTempSoil != null && (minTempSoil < MIN_TEMPERATURE || minTempSoil > MAX_TEMPERATURE)) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", MinTempSoil. Equals: " + minTempSoil);
+        }
+        return minTempSoil;
+    }
+
+    public static Double getMaxTempAir(XSSFSheet sheet) {
+        Double maxTempAir = getDouble(sheet.getRow(29), 3, 0);
+        if (maxTempAir != null && (maxTempAir < MIN_TEMPERATURE || maxTempAir > MAX_TEMPERATURE)) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", MaxTempAir. Equals: " + maxTempAir);
+        }
+        return maxTempAir;
+    }
+
+    public static Double getAverageTemp(XSSFSheet sheet) {
+        Double averageTemp = getDouble(sheet.getRow(30), 3, 0);
+        if (averageTemp != null && (averageTemp < MIN_TEMPERATURE || averageTemp > MAX_TEMPERATURE)) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", AverageTemp. Equals: " + averageTemp);
+        }
+        return averageTemp;
+    }
+
+    public static Double getMin2cm(XSSFSheet sheet) {
+        Double min2cm = getDouble(sheet.getRow(31), 3, 0);
+        if (min2cm != null && (min2cm < MIN_TEMPERATURE || min2cm > MAX_TEMPERATURE)) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", Min2cm. Equals: " + min2cm);
+        }
+        return min2cm;
+    }
+
+    public static Double getPrecipitation00(XSSFSheet sheet) {
+        Double precipitation00 = getDouble(sheet.getRow(27), 9, 0);
+        if (precipitation00 != null && (precipitation00 < 0 || precipitation00 > MAX_PRECIPITATION)) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", Precipitation00. Equals: " + precipitation00);
+        }
+        return precipitation00;
+    }
+
+    public static Double getPrecipitation06(XSSFSheet sheet) {
+        Double precipitation06 = getDouble(sheet.getRow(28), 9, 0);
+        if (precipitation06 != null && (precipitation06 < 0 || precipitation06 > MAX_PRECIPITATION)) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", Precipitation06. Equals: " + precipitation06);
+        }
+        return precipitation06;
+    }
+
+    public static Double getPrecipitation12(XSSFSheet sheet) {
+        Double precipitation12 = getDouble(sheet.getRow(27), 11, 0);
+        if (precipitation12 != null && (precipitation12 < 0 || precipitation12 > MAX_PRECIPITATION)) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", Precipitation12. Equals: " + precipitation12);
+        }
+        return precipitation12;
+    }
+
+    public static Double getPrecipitation18(XSSFSheet sheet) {
+        Double precipitation18 = getDouble(sheet.getRow(28), 11, 0);
+        if (precipitation18 != null && (precipitation18 < 0 || precipitation18 > MAX_PRECIPITATION)) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", Precipitation18. Equals: " + precipitation18);
+        }
+        return precipitation18;
+    }
+
+    // common methods
     private static String getString(XSSFRow row, int columnNumber) {
         XSSFCell cell = row.getCell(columnNumber);
         return CellWorker.getString(cell);
     }
 
     private static Integer getInteger (XSSFRow row, int columnNumber, int numberInCell) {
-        Integer timeResult;
+        Integer result;
         try {
-            timeResult = CellWorker.getNInteger(row.getCell(columnNumber), numberInCell);
-        } catch (IllegalArgumentException e) {
+            result = CellWorker.getNInteger(row.getCell(columnNumber), numberInCell);
+        } catch (Exception e) {
             return null;
         }
-        return timeResult;
+        return result;
     }
 
     private static Double getDouble (XSSFRow row, int columnNumber, int numberInCell) {
-        Double timeResult;
+        Double result;
         try {
-            timeResult = CellWorker.getNDouble(row.getCell(columnNumber), numberInCell);
-        } catch (IllegalArgumentException e) {
+            result = CellWorker.getNDouble(row.getCell(columnNumber), numberInCell);
+        } catch (Exception e) {
             return null;
         }
-        return timeResult;
+        return result;
     }
-
-/*
-    // ModelExtended's methods
-    public static Double getMinAirTemperature(XSSFSheet sheet) {
-        String stringFromCell = XLSXFieldWorkerUtil.getStringFromCell(path, sheet, 27, 3);
-        Double qfeResult;
-        try {
-            List<Double> doubleList = XLSXFieldWorkerUtil.getDoublesFromString(stringFromCell);
-            qfeResult = XLSXFieldWorkerUtil.getNDoubleFromDoubles(doubleList, 0);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-        return qfeResult;
-    }
-
-    public static Double getMinEarthTemperature(XSSFSheet sheet) {
-        String stringFromCell = XLSXFieldWorkerUtil.getStringFromCell(path, sheet, 28, 3);
-        Double qfeResult;
-        try {
-            List<Double> doubleList = XLSXFieldWorkerUtil.getDoublesFromString(stringFromCell);
-            qfeResult = XLSXFieldWorkerUtil.getNDoubleFromDoubles(doubleList, 0);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-        return qfeResult;
-    }
-
-    public static Double getMaxAirTemperature(XSSFSheet sheet) {
-        String stringFromCell = XLSXFieldWorkerUtil.getStringFromCell(path, sheet, 29, 3);
-        Double qfeResult;
-        try {
-            List<Double> doubleList = XLSXFieldWorkerUtil.getDoublesFromString(stringFromCell);
-            qfeResult = XLSXFieldWorkerUtil.getNDoubleFromDoubles(doubleList, 0);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-        return qfeResult;
-    }
-
-    public static Double getAverageTemperature(XSSFSheet sheet) {
-        String stringFromCell = XLSXFieldWorkerUtil.getStringFromCell(path, sheet, 30, 3);
-        Double qfeResult;
-        try {
-            List<Double> doubleList = XLSXFieldWorkerUtil.getDoublesFromString(stringFromCell);
-            qfeResult = XLSXFieldWorkerUtil.getNDoubleFromDoubles(doubleList, 0);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-        return qfeResult;
-    }
-
-    public static Double getPrecipitation00h(XSSFSheet sheet) {
-        String stringFromCell = XLSXFieldWorkerUtil.getStringFromCell(path, sheet, 27, 9);
-        Double qfeResult;
-        try {
-            List<Double> doubleList = XLSXFieldWorkerUtil.getDoublesFromString(stringFromCell);
-            qfeResult = XLSXFieldWorkerUtil.getNDoubleFromDoubles(doubleList, 0);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-        return qfeResult;
-    }
-
-    public static Double getPrecipitation06h(XSSFSheet sheet) {
-        String stringFromCell = XLSXFieldWorkerUtil.getStringFromCell(path, sheet, 28, 9);
-        Double qfeResult;
-        try {
-            List<Double> doubleList = XLSXFieldWorkerUtil.getDoublesFromString(stringFromCell);
-            qfeResult = XLSXFieldWorkerUtil.getNDoubleFromDoubles(doubleList, 0);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-        return qfeResult;
-    }
-
-    public static Double getPrecipitation12h(XSSFSheet sheet) {
-        String stringFromCell = XLSXFieldWorkerUtil.getStringFromCell(path, sheet, 29, 9);
-        Double qfeResult;
-        try {
-            List<Double> doubleList = XLSXFieldWorkerUtil.getDoublesFromString(stringFromCell);
-            qfeResult = XLSXFieldWorkerUtil.getNDoubleFromDoubles(doubleList, 0);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-        return qfeResult;
-    }
-
-    public static Double getPrecipitation18h(XSSFSheet sheet) {
-        String stringFromCell = XLSXFieldWorkerUtil.getStringFromCell(path, sheet, 30, 9);
-        Double qfeResult;
-        try {
-            List<Double> doubleList = XLSXFieldWorkerUtil.getDoublesFromString(stringFromCell);
-            qfeResult = XLSXFieldWorkerUtil.getNDoubleFromDoubles(doubleList, 0);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-        return qfeResult;
-    }
-    */
-
 }

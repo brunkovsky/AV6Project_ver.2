@@ -1,6 +1,7 @@
 package FilePackage;
 
 import MainPackage.Model;
+import MainPackage.ModelExtended;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -28,6 +29,33 @@ public class FilesWorker {
         return getModelsFromFiles();
     }
 
+    public static List<ModelExtended> getModelsExtended(File[] files) {
+        catchNullArgument(files);
+        catchEmptyArgument(files);
+        currentFiles = files;
+        return getModelsExtendedFromFiles();
+    }
+
+    private static List<ModelExtended> getModelsExtendedFromFiles() {
+        List<ModelExtended> result = new ArrayList<>();
+        for (File file :currentFiles) {
+            List<ModelExtended> modelsExtended;
+            modelsExtended = FileWorker.getModelsExtended(file);
+            result.addAll(modelsExtended);
+        }
+        return result;
+    }
+
+    private static List<Model> getModelsFromFiles() {
+        List<Model> result = new ArrayList<>();
+        for (File file :currentFiles) {
+            List<Model> models;
+            models = FileWorker.getModels(file);
+            result.addAll(models);
+        }
+        return result;
+    }
+
     private static void checkAbsentFiles(File[] files) {
         for (int fileCount = 0; fileCount < files.length - 1; fileCount++) {
             String file1 = files[fileCount].getName();
@@ -44,16 +72,6 @@ public class FilesWorker {
                 log.warn("Warning! file between " + file1 + " and " + file2 + " is absent");
             }
         }
-    }
-
-    private static List<Model> getModelsFromFiles() {
-        List<Model> result = new ArrayList<>();
-        for (File file :currentFiles) {
-            List<Model> models;
-            models = FileWorker.getModels(file);
-            result.addAll(models);
-        }
-        return result;
     }
 
     private static void catchEmptyArgument(File[] files) {
