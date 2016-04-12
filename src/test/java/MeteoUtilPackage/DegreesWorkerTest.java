@@ -6,6 +6,6 @@ public class DegreesWorkerTest {
 
     @Test
     public void testGetDirection() {
-
+        //todo : test
     }
 }
