@@ -10,17 +10,26 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         File AV6Errors = new File("/Volumes/Users/Stas/AV6Errors.log");
-        AV6Errors.delete();
+        if (AV6Errors.delete()) {
+            System.out.println("AV6Errors.log deleted");
+        }
         String pathToDataFolder = OSDetector.getPathToDataFolder();
         File[] files = FilesWorker.getFiles(pathToDataFolder);
         List<Model> models = FilesWorker.getModels(files);
+        System.out.println("List<Model> models creation complete");
         List<ModelExtended> modelsExtended = FilesWorker.getModelsExtended(files);
+        System.out.println("List<ModelExtended> modelsExtended creation complete");
         if (AV6Errors.length() > 0) {
-            System.err.println("Errors found. Log in /Volumes/Users/Stas/AV6Errors.log");
+            System.err.println("Errors found. LogFile in /Volumes/Users/Stas/AV6Errors.log");
         } else {
-            DBWorker dbWorker = new DBWorker(OSDetector.getUserNameBd(), OSDetector.getPasswordBd());
-            dbWorker.fillDB(models);
-            dbWorker.fillDBExtended(modelsExtended);
+            DBWorker dbWorkerForModels = new DBWorker(OSDetector.getUserNameBd(), OSDetector.getPasswordBd());
+            DBWorker dbWorkerForModelsExtended = new DBWorker(OSDetector.getUserNameBd(), OSDetector.getPasswordBd());
+            System.out.println("dbWorkers enabled");
+            dbWorkerForModels.fillDB(models);
+            System.out.println("models in database");
+            dbWorkerForModelsExtended.fillDBExtended(modelsExtended);
+            System.out.println("modelsExtended in database");
+            System.out.println("work complete");
         }
     }
 }

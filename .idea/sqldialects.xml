@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/main/java/DBPackage/DBWorker.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/sql/average_temp_for_month.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/sql/average_wind.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/sql/create_table_av6.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/sql/create_table_av6_extended.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/sql/danger_situation.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/sql/max_wind_rush.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/sql/visibility_less_then_350.sql" dialect="MySQL" />
+  </component>
+</project>

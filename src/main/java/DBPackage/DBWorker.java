@@ -1,7 +1,5 @@
 package DBPackage;
 
-// todo: bad example: open connection in constructor, use in one method, close in other
-
 import MainPackage.Model;
 import MainPackage.ModelExtended;
 
@@ -35,109 +33,38 @@ public class DBWorker {
         }
         PreparedStatement pStatement;
         for (int i = 0; i < modelList.size(); i++) {
+            Model model = modelList.get(i);
             String SOLFillQuery = "INSERT INTO table_av6(date, wind_direction_name, wind_speed, wind_rush, visibility, octants_numerator, octants_denominator, cloudForm, cloudiness, temperature, dew_point_temperature, relativity_humidity, absolute_humidity, atmosphere_pressure, barometric_trend, qnh_gpa, qnh_mm, qfe) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             try {
                 pStatement = connection.prepareStatement(SOLFillQuery);
-                pStatement.setObject(1, new Timestamp(modelList.get(i).getDate().getTime()));
-                pStatement.setString(2, modelList.get(i).getWindDirectionName());
-
-                if(modelList.get(i).getWindSpeed() == null) {
-                    pStatement.setNull(3, Types.INTEGER);
-                } else {
-                    pStatement.setInt(3, modelList.get(i).getWindSpeed());
-                }
-
-                if(modelList.get(i).getWindRush() == null) {
-                    pStatement.setNull(4, Types.INTEGER);
-                } else {
-                    pStatement.setInt(4, modelList.get(i).getWindRush());
-                }
-
-                if(modelList.get(i).getVisibility() == null) {
-                    pStatement.setNull(5, Types.INTEGER);
-                } else {
-                    pStatement.setInt(5, modelList.get(i).getVisibility());
-                }
-
-                if(modelList.get(i).getOctantsNumerator() == null) {
-                    pStatement.setNull(6, Types.INTEGER);
-                } else {
-                    pStatement.setInt(6, modelList.get(i).getOctantsNumerator());
-                }
-
-                if(modelList.get(i).getOctantsDenominator() == null) {
-                    pStatement.setNull(7, Types.INTEGER);
-                } else {
-                    pStatement.setInt(7, modelList.get(i).getOctantsDenominator());
-                }
-
-                pStatement.setString(8, modelList.get(i).getCloudForm());
-                if(modelList.get(i).getCloudiness() == null) {
-                    pStatement.setNull(9, Types.INTEGER);
-                } else {
-                    pStatement.setInt(9, modelList.get(i).getCloudiness());
-                }
-
-                if(modelList.get(i).getTemperature() == null) {
-                    pStatement.setNull(10, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(10, modelList.get(i).getTemperature());
-                }
-
-                if(modelList.get(i).getDewPointTemperature() == null) {
-                    pStatement.setNull(11, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(11, modelList.get(i).getDewPointTemperature());
-                }
-
-                if(modelList.get(i).getRelativityHumidity() == null) {
-                    pStatement.setNull(12, Types.INTEGER);
-                } else {
-                    pStatement.setInt(12, modelList.get(i).getRelativityHumidity());
-                }
-
-                if(modelList.get(i).getAbsoluteHumidity() == null) {
-                    pStatement.setNull(13, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(13, modelList.get(i).getAbsoluteHumidity());
-                }
-
-                if(modelList.get(i).getAtmospherePressure() == null) {
-                    pStatement.setNull(14, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(14, modelList.get(i).getAtmospherePressure());
-                }
-
-                if(modelList.get(i).getBarometricTrend() == null) {
-                    pStatement.setNull(15, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(15, modelList.get(i).getBarometricTrend());
-                }
-
-                if(modelList.get(i).getQnhGpa() == null) {
-                    pStatement.setNull(16, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(16, modelList.get(i).getQnhGpa());
-                }
-
-                if(modelList.get(i).getQnhMm() == null) {
-                    pStatement.setNull(17, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(17, modelList.get(i).getQnhMm());
-                }
-
-                if(modelList.get(i).getQfe() == null) {
-                    pStatement.setNull(18, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(18, modelList.get(i).getQfe());
-                }
-
+                pStatement.setObject(1, new Timestamp(model.getDate().getTime()));
+                pStatement.setString(2, model.getWindDirectionName());
+                SimplifierAddNull.setIntegerOrNull(pStatement, model.getWindSpeed(), 3);
+                SimplifierAddNull.setIntegerOrNull(pStatement, model.getWindRush(), 4);
+                SimplifierAddNull.setIntegerOrNull(pStatement, model.getVisibility(), 5);
+                SimplifierAddNull.setIntegerOrNull(pStatement, model.getOctantsNumerator(), 6);
+                SimplifierAddNull.setIntegerOrNull(pStatement, model.getOctantsDenominator(), 7);
+                pStatement.setString(8, model.getCloudForm());
+                SimplifierAddNull.setIntegerOrNull(pStatement, model.getCloudiness(), 9);
+                SimplifierAddNull.setDoubleOrNull(pStatement, model.getTemperature(), 10);
+                SimplifierAddNull.setDoubleOrNull(pStatement, model.getDewPointTemperature(), 11);
+                SimplifierAddNull.setIntegerOrNull(pStatement, model.getRelativityHumidity(), 12);
+                SimplifierAddNull.setDoubleOrNull(pStatement, model.getAbsoluteHumidity(), 13);
+                SimplifierAddNull.setDoubleOrNull(pStatement, model.getAtmospherePressure(), 14);
+                SimplifierAddNull.setDoubleOrNull(pStatement, model.getBarometricTrend(), 15);
+                SimplifierAddNull.setDoubleOrNull(pStatement, model.getQnhGpa(), 16);
+                SimplifierAddNull.setDoubleOrNull(pStatement, model.getQnhMm(), 17);
+                SimplifierAddNull.setDoubleOrNull(pStatement, model.getQfe(), 18);
                 pStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void fillDBExtended(List<ModelExtended> modelExtendedList) {
@@ -152,66 +79,21 @@ public class DBWorker {
 
         PreparedStatement pStatement;
         for (int i = 0; i < modelExtendedList.size(); i++) {
+            ModelExtended modelExtended = modelExtendedList.get(i);
             String SOLFillQuery = "INSERT INTO table_av6_extended(date, min_temp_air, min_temp_soil, max_temp_air, average_temp, min_2cm, precipitation_00, precipitation_06, precipitation_12, precipitation_18) VALUES(?,?,?,?,?,?,?,?,?,?)";
             try {
                 pStatement = connection.prepareStatement(SOLFillQuery);
                 Date date = modelExtendedList.get(i).getDate();
                 pStatement.setDate(1, (new java.sql.Date(date.getTime())));
-
-                if(modelExtendedList.get(i).getMinTempAir() == null) {
-                    pStatement.setNull(2, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(2, modelExtendedList.get(i).getMinTempAir());
-                }
-
-                if(modelExtendedList.get(i).getMinTempSoil() == null) {
-                    pStatement.setNull(3, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(3, modelExtendedList.get(i).getMinTempSoil());
-                }
-
-                if(modelExtendedList.get(i).getMaxTempAir() == null) {
-                    pStatement.setNull(4, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(4, modelExtendedList.get(i).getMaxTempAir());
-                }
-
-                if(modelExtendedList.get(i).getAverageTemp() == null) {
-                    pStatement.setNull(5, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(5, modelExtendedList.get(i).getAverageTemp());
-                }
-
-                if(modelExtendedList.get(i).getMin2cm() == null) {
-                    pStatement.setNull(6, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(6, modelExtendedList.get(i).getMin2cm());
-                }
-
-                if(modelExtendedList.get(i).getPrecipitation00() == null) {
-                    pStatement.setNull(7, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(7, modelExtendedList.get(i).getPrecipitation00());
-                }
-
-                if(modelExtendedList.get(i).getPrecipitation06() == null) {
-                    pStatement.setNull(8, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(8, modelExtendedList.get(i).getPrecipitation06());
-                }
-
-                if(modelExtendedList.get(i).getPrecipitation12() == null) {
-                    pStatement.setNull(9, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(9, modelExtendedList.get(i).getPrecipitation12());
-                }
-
-                if(modelExtendedList.get(i).getPrecipitation18() == null) {
-                    pStatement.setNull(10, Types.DOUBLE);
-                } else {
-                    pStatement.setDouble(10, modelExtendedList.get(i).getPrecipitation18());
-                }
-
+                SimplifierAddNull.setDoubleOrNull(pStatement, modelExtended.getMinTempAir(), 2);
+                SimplifierAddNull.setDoubleOrNull(pStatement, modelExtended.getMinTempSoil(), 3);
+                SimplifierAddNull.setDoubleOrNull(pStatement, modelExtended.getMaxTempAir(), 4);
+                SimplifierAddNull.setDoubleOrNull(pStatement, modelExtended.getAverageTemp(), 5);
+                SimplifierAddNull.setDoubleOrNull(pStatement, modelExtended.getMin2cm(), 6);
+                SimplifierAddNull.setDoubleOrNull(pStatement, modelExtended.getPrecipitation00(), 7);
+                SimplifierAddNull.setDoubleOrNull(pStatement, modelExtended.getPrecipitation06(), 8);
+                SimplifierAddNull.setDoubleOrNull(pStatement, modelExtended.getPrecipitation12(), 9);
+                SimplifierAddNull.setDoubleOrNull(pStatement, modelExtended.getPrecipitation18(), 10);
                 pStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -221,6 +103,24 @@ public class DBWorker {
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static class SimplifierAddNull {
+        private static void setIntegerOrNull(PreparedStatement preparedStatement, Integer value, int n) throws SQLException {
+            if(value != null) {
+                preparedStatement.setInt(n, value);
+            }
+            else
+                preparedStatement.setNull(n, Types.INTEGER);
+        }
+
+        private static void setDoubleOrNull(PreparedStatement preparedStatement, Double value, int n) throws SQLException {
+            if(value != null) {
+                preparedStatement.setDouble(n, value);
+            }
+            else
+                preparedStatement.setNull(n, Types.DOUBLE);
         }
     }
 }
