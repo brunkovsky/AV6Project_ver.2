@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/src/sql/average_temp_for_month.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/average_wind.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/check_null_from_av6.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/sql/check_null_from_av6_extended.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/create_table_av6.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/create_table_av6_extended.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/max_temp_air.sql" dialect="MySQL" />

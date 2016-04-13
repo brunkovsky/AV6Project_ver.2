@@ -1,4 +1,4 @@
-SELECT CAST(date as DATE) as only_date
+SELECT CAST(date as DATE) as null_in_av6
 FROM table_av6
 WHERE wind_direction_name is NULL
       AND wind_speed IS NULL
@@ -16,5 +16,5 @@ WHERE wind_direction_name is NULL
       AND qnh_gpa IS NULL
       AND qnh_mm IS NULL
       AND qfe IS NULL
-  GROUP BY only_date
-ORDER BY only_date;
+  GROUP BY null_in_av6
+ORDER BY null_in_av6;
