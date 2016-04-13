@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        File AV6Errors = new File("/Volumes/Users/Stas/AV6Errors.log");
+        File AV6Errors = new File("/home/briz/AV6Errors.log");
         if (AV6Errors.delete()) {
             System.out.println("AV6Errors.log deleted");
         }
@@ -19,9 +19,9 @@ public class Main {
         System.out.println("List<Model> models creation complete");
         List<ModelExtended> modelsExtended = FilesWorker.getModelsExtended(files);
         System.out.println("List<ModelExtended> modelsExtended creation complete");
-        if (AV6Errors.length() > 0) {
-            System.err.println("Errors found. LogFile in /Volumes/Users/Stas/AV6Errors.log");
-        } else {
+//        if (AV6Errors.length() > 0) {
+//            System.out.println("Errors found. LogFile in /home/briz/AV6Errors.log");
+//        } else {
             DBWorker dbWorkerForModels = new DBWorker(OSDetector.getUserNameBd(), OSDetector.getPasswordBd());
             DBWorker dbWorkerForModelsExtended = new DBWorker(OSDetector.getUserNameBd(), OSDetector.getPasswordBd());
             System.out.println("dbWorkers enabled");
@@ -30,6 +30,6 @@ public class Main {
             dbWorkerForModelsExtended.fillDBExtended(modelsExtended);
             System.out.println("modelsExtended in database");
             System.out.println("work complete");
-        }
+//        }
     }
 }

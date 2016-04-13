@@ -1,1 +1,4 @@
-SELECT AVG(wind_speed) AS `average wind speed` FROM `table_av6` WHERE date BETWEEN '2016-02-21' AND '2016-06-21';
+SELECT ROUND(AVG(wind_speed)) AS `average wind speed`
+FROM `table_av6`
+WHERE date
+BETWEEN '2015-01-01' AND '2016-01-01';

@@ -11,7 +11,6 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 public class DataHandler {
-    private static final int MAX_TIME = 23;
     private static final int MAX_DEGREES = 360;
     private static final int MAX_WIND_SPEED = 50;
     private static final int MIN_WIND_RUSH = 7;
@@ -30,22 +29,14 @@ public class DataHandler {
     private static final double MIN_BAROMETRIC_TREND = -10;
     private static final double MAX_BAROMETRIC_TREND = 10;
     private static final double MIN_QNH_GPA = 970;
-    private static final double MAX_QNH_GPA = 1040;
+    private static final double MAX_QNH_GPA = 1050;
     private static final double MIN_QNH_MM = 700;
     private static final double MAX_QNH_MM = 800;
     private static final double MIN_QFE = 970;
-    private static final double MAX_QFE = 1040;
+    private static final double MAX_QFE = 1050;
     private static final double MAX_PRECIPITATION = 1000;
 
     // Model's methods
-    public static Integer getTime(XSSFRow row) {
-        Integer time = getInteger(row, 0, 0);
-        if (time != null && (time < 0 || time > MAX_TIME)) {
-            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName()  + ", #Row: " + (RowWorker.getCurrentRow().getRowNum() + 1) + ", Time value in column 'A' is not valid. Equals: " + time);
-        }
-        return time;
-    }
-
     public static String getWindDirectionName(XSSFRow row) {
         Integer windDirectionDegrees = getInteger(row, 1, 0);
         if (windDirectionDegrees != null && (windDirectionDegrees < 0 || windDirectionDegrees > MAX_DEGREES)) {
