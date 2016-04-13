@@ -7,9 +7,11 @@
     <file url="file://$PROJECT_DIR$/src/sql/check_null_from_av6.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/create_table_av6.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/create_table_av6_extended.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/sql/max_temp_air.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/max_wind_rush.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/min_temp_air.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/pri_wind_direction.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/sql/sum_precipitation.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/sql/visibility_less_then_350.sql" dialect="MySQL" />
   </component>
 </project>
