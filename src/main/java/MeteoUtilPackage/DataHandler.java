@@ -34,7 +34,7 @@ public class DataHandler {
     private static final double MAX_QNH_MM = 800;
     private static final double MIN_QFE = 970;
     private static final double MAX_QFE = 1050;
-    private static final double MAX_PRECIPITATION = 1000;
+    private static final double MAX_PRECIPITATION = 100;
 
     // Model's methods
     public static String getWindDirectionName(XSSFRow row) {

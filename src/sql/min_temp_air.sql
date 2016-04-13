@@ -1,0 +1,1 @@
+SELECT MIN(min_temp_air) FROM table_av6_extended;
