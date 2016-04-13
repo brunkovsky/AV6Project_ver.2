@@ -1,6 +1,7 @@
-SELECT CAST(date as DATE) as null_in_av6
+SELECT CAST(date AS DATE)
+  AS null_in_av6
 FROM table_av6
-WHERE wind_direction_name is NULL
+WHERE wind_direction_name IS NULL
       AND wind_speed IS NULL
       AND wind_rush IS NULL
       AND visibility IS NULL

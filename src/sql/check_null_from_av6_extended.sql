@@ -1,4 +1,5 @@
-SELECT CAST(date as DATE) as null_in_av6_extended
+SELECT CAST(date AS DATE)
+  AS null_in_av6_extended
 FROM table_av6_extended
 WHERE min_temp_air IS NULL
       AND min_temp_soil IS NULL

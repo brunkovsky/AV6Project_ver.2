@@ -1,5 +1,6 @@
 SELECT wind_direction_name,
-  COUNT(wind_direction_name) AS `count`
+  COUNT(wind_direction_name)
+    AS count
 FROM table_av6
 WHERE date BETWEEN '2015-01-01'
 AND '2016-02-29'
