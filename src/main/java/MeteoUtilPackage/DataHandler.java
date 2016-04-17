@@ -1,7 +1,5 @@
 package MeteoUtilPackage;
 
-// todo: lock cells in excel file. leave only these, who may be edited and comment fields
-
 import ExcelPackage.CellWorker;
 import ExcelPackage.RowWorker;
 import ExcelPackage.SheetWorker;
@@ -258,9 +256,76 @@ public class DataHandler {
         return precipitation18;
     }
 
+    // ModelExtended headers methods
+    public static void checkAB28Cell (XSSFSheet sheet) {
+        String a28Cell = getString(sheet.getRow(27), 0);
+        String b28Cell = getString(sheet.getRow(27), 1);
+        if (a28Cell != null && !a28Cell.equals("Мин.") || b28Cell != null && !b28Cell.equals("воз-ха=")) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", ab28Cell. Equals: " + a28Cell + " " + b28Cell);
+        }
+    }
+
+    public static void checkAB29Cell (XSSFSheet sheet) {
+        String a29Cell = getString(sheet.getRow(28), 0);
+        String b29Cell = getString(sheet.getRow(28), 1);
+        if (a29Cell != null && !a29Cell.equals("Мин.") || b29Cell != null && !b29Cell.equals("почвы=")) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", ab29Cell. Equals: " + a29Cell + " " + b29Cell);
+        }
+    }
+
+    public static void checkAB30Cell (XSSFSheet sheet) {
+        String a30Cell = getString(sheet.getRow(29), 0);
+        String b30Cell = getString(sheet.getRow(29), 1);
+        if (a30Cell != null && !a30Cell.equals("Макс.") || b30Cell != null && !b30Cell.equals("воз-ха=")) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", ab30Cell. Equals: " + a30Cell + " " + b30Cell);
+        }
+    }
+
+    public static void checkAB31Cell (XSSFSheet sheet) {
+        String a31Cell = getString(sheet.getRow(30), 0);
+        String b31Cell = getString(sheet.getRow(30), 1);
+        if (a31Cell != null && !a31Cell.equals("Ср.") || b31Cell != null && !b31Cell.equals("суточная=")) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", ab31Cell. Equals: " + a31Cell + " " + b31Cell);
+        }
+    }
+
+    public static void checkI28Cell (XSSFSheet sheet) {
+        Integer i28Cell = getInteger(sheet.getRow(27), 8, 0);
+        if (i28Cell != null && i28Cell != 0) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", i28Cell. Equals: " + i28Cell);
+        }
+    }
+
+    public static void checkI29Cell (XSSFSheet sheet) {
+        Integer i29Cell = getInteger(sheet.getRow(28), 8, 0);
+        if (i29Cell != null && i29Cell != 6) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", i29Cell. Equals: " + i29Cell);
+        }
+    }
+
+    public static void checkK28Cell (XSSFSheet sheet) {
+        Integer k28Cell = getInteger(sheet.getRow(27), 10, 0);
+        if (k28Cell != null && k28Cell != 12) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", k28Cell. Equals: " + k28Cell);
+        }
+    }
+
+    public static void checkK29Cell (XSSFSheet sheet) {
+        Integer k29Cell = getInteger(sheet.getRow(28), 10, 0);
+        if (k29Cell != null && k29Cell != 18) {
+            throw new IllegalArgumentException("FileName: " + FileWorker.getCurrentFile().getName() + ", SheetName: " +  SheetWorker.getCurrentSheet().getSheetName() + ", k29Cell. Equals: " + k29Cell);
+        }
+    }
+
+
     // common methods
     private static String getString(XSSFRow row, int columnNumber) {
-        XSSFCell cell = row.getCell(columnNumber);
+        XSSFCell cell;
+        try {
+            cell = row.getCell(columnNumber);
+        } catch (NullPointerException e) {
+            return "";
+        }
         return CellWorker.getString(cell);
     }
 

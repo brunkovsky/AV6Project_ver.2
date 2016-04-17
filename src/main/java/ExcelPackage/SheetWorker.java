@@ -19,7 +19,6 @@ public class SheetWorker {
     private static final int LAST_ROW_OF_DATA = 27;
 
     public static Date getCreateSheetDate() {
-//        System.out.println(createSheetDate);
         return createSheetDate;
     }
 
@@ -34,7 +33,58 @@ public class SheetWorker {
 
     public static ModelExtended getModelExtended(XSSFSheet sheet) {
         calculateInternalEntity(sheet);
+        checkModelExtendedHeaders();
         return getModelExtendedFromSheet();
+    }
+
+    private static void checkModelExtendedHeaders() {
+        try {
+            DataHandler.checkAB28Cell(currentSheet);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            DataHandler.checkAB29Cell(currentSheet);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            DataHandler.checkAB30Cell(currentSheet);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            DataHandler.checkAB31Cell(currentSheet);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            DataHandler.checkI28Cell(currentSheet);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            DataHandler.checkI29Cell(currentSheet);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            DataHandler.checkK28Cell(currentSheet);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            DataHandler.checkK29Cell(currentSheet);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+        }
     }
 
     private static void calculateInternalEntity(XSSFSheet sheet) {

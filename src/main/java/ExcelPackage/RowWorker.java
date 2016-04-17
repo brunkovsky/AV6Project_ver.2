@@ -31,7 +31,6 @@ public class RowWorker {
         Date createSheetDate = SheetWorker.getCreateSheetDate();
         long longDate = createSheetDate.getTime();
         longDate = longDate - (3 - currentRow.getRowNum()) * 1000 * 60 * 60;
-        System.out.println(new Date(longDate));
         return new Date(longDate);
     }
 
