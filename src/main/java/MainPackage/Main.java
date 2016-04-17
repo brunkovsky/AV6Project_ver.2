@@ -1,6 +1,5 @@
 package MainPackage;
 
-import DBPackage.DBWorker;
 import FilePackage.FilesWorker;
 import OSSwitcherPackage.OSDetector;
 
@@ -17,8 +16,9 @@ public class Main {
         File[] files = FilesWorker.getFiles(pathToDataFolder);
         List<Model> models = FilesWorker.getModels(files);
         System.out.println("List<Model> models creation complete");
-        List<ModelExtended> modelsExtended = FilesWorker.getModelsExtended(files);
-        System.out.println("List<ModelExtended> modelsExtended creation complete");
+        AdequateCheck.checkModels(models);
+//        List<ModelExtended> modelsExtended = FilesWorker.getModelsExtended(files);
+//        System.out.println("List<ModelExtended> modelsExtended creation complete");
 //        if (AV6Errors.length() > 0) {
 //            System.out.println("Errors found. LogFile in /home/briz/AV6Errors.log");
 //        } else {
