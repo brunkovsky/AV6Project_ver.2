@@ -37,7 +37,7 @@ public class FilesWorker {
     }
 
     private static List<ModelExtended> getModelsExtendedFromFiles() {
-        List<ModelExtended> result = new ArrayList<>();
+        List<ModelExtended> result = new ArrayList<>(5000);
         for (File file :currentFiles) {
             List<ModelExtended> modelsExtended;
             modelsExtended = FileWorker.getModelsExtended(file);
@@ -47,7 +47,7 @@ public class FilesWorker {
     }
 
     private static List<Model> getModelsFromFiles() {
-        List<Model> result = new ArrayList<>();
+        List<Model> result = new ArrayList<>(100000);
         for (File file :currentFiles) {
             List<Model> models;
             models = FileWorker.getModels(file);
