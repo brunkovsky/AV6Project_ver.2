@@ -5,9 +5,9 @@ import java.util.List;
 public class AdequateCheck {
     private static final int THRESHOLD_ADEQUATE_WIND_SPEED_DIFFERENCE = 10;
     private static final int THRESHOLD_ADEQUATE_WIND_RUSH_DIFFERENCE = 20;
-    private static final double THRESHOLD_ADEQUATE_TEMPERATURE = 5.0;
-    private static final int THRESHOLD_ADEQUATE_RELATIVITY_HUMIDITY = 25;
-    private static final double THRESHOLD_ADEQUATE_ABSOLUTE_HUMIDITY = 20.0;
+    private static final double THRESHOLD_ADEQUATE_TEMPERATURE = 15.0;
+    private static final int THRESHOLD_ADEQUATE_RELATIVITY_HUMIDITY = 40;
+    private static final double THRESHOLD_ADEQUATE_ABSOLUTE_HUMIDITY = 40.0;
 
     public static void checkModels(List<Model> models) {
         for (int i = 1; i < models.size(); i++) {
